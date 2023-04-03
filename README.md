@@ -1,38 +1,46 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# 概要
 
-## Getting Started
+- Azure Static Web Apps の実装。
+- Nextjs の SSG を使用したうえで、SWA CLI を使用使ってデプロイする。
 
-First, run the development server:
+# 環境構築
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
+$ npm install
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+# ローカルでの確認
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+- ビルド
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
+  ```bash
+  $ swa build
+  ```
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+- ビルドされたファイルをローカルで実行
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+  ```bash
+  $ swa start
+  ```
 
-## Learn More
+# デプロイ
 
-To learn more about Next.js, take a look at the following resources:
+- ルート直下に`.env`ファイルを作成し、各環境に合わせて記述する。
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+  ```bash
+  SWA_CLI_APP_NAME=swa-nextjs-ssg
+  AZURE_TENANT_ID=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx # Azureのテナントid
+  AZURE_SUBSCRIPTION_ID=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx # サブスクリプションid
+  AZURE_RESOURCE_GROUP=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx # デプロイするリソースグループを指定
+  AZURE_REGION_LOCATION=eastasia # リージョンの指定。今回はeastasiaを指定。
+  SWA_CLI_DEPLOY_ENV=Production # デプロイ環境。デフォルトではPreview環境となりますが、今回は本番環境に直接デプロイするため、Productionに変更。
+  ```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+- デプロイ
+  ```bash
+  $ swa deploy --no-use-keychain
+  ```
 
-## Deploy on Vercel
+# 備考
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+[詳細の手順をまとめた Qiita 記事](https://qiita.com/fsdg-takada/items/ff64bc0d46bc2e2a470b)
